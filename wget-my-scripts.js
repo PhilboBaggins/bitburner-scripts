@@ -11,7 +11,7 @@ async function wgetScript(ns, baseURL, fileName) {
 export async function main(ns) {
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'auto-root.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'deploy-to-all.js');
-    //await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'find-file.js');
+    await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'find-file.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'hack-self.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'll.js');
     //await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-grow.js');
