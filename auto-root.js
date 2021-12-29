@@ -43,6 +43,7 @@ export async function main(ns) {
 
     var numServers = 0;
     var numServersWithRoot = 0;
+    var numServersWithRootNew = 0;
 
     scanAndRun(ns, '', 'home', host => {
         ns.tprint(`${host}:`);
@@ -63,6 +64,7 @@ export async function main(ns) {
             ns.tprint('    Running NUKE.exe');
             ns.nuke(host);
             numServersWithRoot++;
+            numServersWithRootNew++;
             installBackdoor(ns);
 
             //
@@ -76,5 +78,6 @@ export async function main(ns) {
 
     let rootPercentage = numServersWithRoot * 100 / numServers;
     ns.tprint('');
-    ns.tprint(`You have root access to ${numServersWithRoot} of ${numServers} servers (${rootPercentage.toFixed(2)}%)`);
+    ns.tprint(`You just gained root access to ${numServersWithRootNew} servers`);
+    ns.tprint(`You now have root access to ${numServersWithRoot} of ${numServers} servers (${rootPercentage.toFixed(2)}%)`);
 }
