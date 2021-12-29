@@ -66,11 +66,6 @@ export async function main(ns) {
             numServersWithRoot++;
             numServersWithRootNew++;
             installBackdoor(ns);
-
-            //
-            // TODO: Install basic hacking script to get some cash generated on this server
-            //
-
         } else {
              ns.tprint('    Unable to run NUKE.exe at this time');
         }
