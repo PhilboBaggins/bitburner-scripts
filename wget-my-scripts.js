@@ -13,11 +13,12 @@ export async function main(ns) {
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'deploy-to-all.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'find-file.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'hack-self.js');
+    await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'killall-everywhere.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'll.js');
     //await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-grow.js');
     //await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-hack.js');
     //await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-weaken.js');
-    //await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'ns.js');
+    await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'ns.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'stock-grow.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'stock-weaken.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'wget-my-scripts.js'); // This script
