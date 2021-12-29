@@ -22,10 +22,19 @@ export async function main(ns) {
         return;
     }
 
+    var numFound = 0;
     await scanAndRun(ns, '', 'home', async function(host) {
         let files = ns.ls(host, fileName);
         if (files.length > 0) {
             ns.tprint(`File found on '${host}'.`);
+            numFound++;
         }
     });
+
+    if (numFound == 0) {
+        ns.tprint('File not found.');
+    } else {
+        ns.tprint('');
+        ns.tprint(`File found on ${numFound} servers.`);
+    }
 }
