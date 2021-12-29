@@ -1,12 +1,12 @@
 
-function scanAndRun(ns, parent, server, func) {
+async function scanAndRun(ns, parent, server, asyncFunc) {
     const children = ns.scan(server);
     for (let child of children) {
         if (parent == child) {
             continue;
         }
-        func(child);
-        scanAndRun(ns, server, child, func);
+        await asyncFunc(child);
+        await scanAndRun(ns, server, child, asyncFunc);
     }
 }
 
@@ -45,7 +45,7 @@ export async function main(ns) {
     var numServersWithRoot = 0;
     var numServersWithRootNew = 0;
 
-    scanAndRun(ns, '', 'home', host => {
+    await scanAndRun(ns, '', 'home', async function(host) {
         ns.tprint(`${host}:`);
         numServers++;
 
@@ -59,13 +59,13 @@ export async function main(ns) {
         if (ns.hasRootAccess(host)) {
             ns.tprint('    Already have root access on this server');
             numServersWithRoot++;
-            installBackdoor(ns);
+            await installBackdoor(ns);
         } else if (numPortsOpen >= ns.getServerNumPortsRequired(host)) {
             ns.tprint('    Running NUKE.exe');
             ns.nuke(host);
             numServersWithRoot++;
             numServersWithRootNew++;
-            installBackdoor(ns);
+            await installBackdoor(ns);
         } else {
              ns.tprint('    Unable to run NUKE.exe at this time');
         }
