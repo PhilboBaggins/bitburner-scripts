@@ -2,9 +2,9 @@
 export async function main(ns) {
     const args = ns.flags([['help', false]]);
     if (args.help || args._.length < 1) {
-        ns.tprint("Run arbitary functions in the \`ns\` interface");
+        ns.tprint('Run arbitary functions in the \`ns\` interface');
 		ns.tprint(`Usage: run ${ns.getScriptName()} function [arguments]`);
-		ns.tprint("Example:");
+		ns.tprint('Example:');
 		ns.tprint(`> run ${ns.getScriptName()} tprint "hello world"`);
         return;
     }

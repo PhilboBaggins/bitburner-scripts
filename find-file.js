@@ -15,9 +15,9 @@ export async function main(ns) {
     const args = ns.flags([["help", false]]);
 	const fileName = args._[0];
     if (args.help || !fileName) {
-        ns.tprint("This searches all servers for a specific file.");
+        ns.tprint('This searches all servers for a specific file.');
         ns.tprint(`Usage: run ${ns.getScriptName()} file-to-search-for`);
-        ns.tprint("Example:");
+        ns.tprint('Example:');
         ns.tprint(`> run ${ns.getScriptName()} csec-test.msg`);
         return;
     }

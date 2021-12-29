@@ -14,9 +14,9 @@ async function scanAndRun(ns, parent, server, asyncFunc) {
 export async function main(ns) {
     const args = ns.flags([['help', false]]);
     if (args.help || args._.length < 1) {
-        ns.tprint("This script deploys another script to all servers and runs it with maximum threads possible.");
+        ns.tprint('This script deploys another script to all servers and runs it with maximum threads possible.');
 		ns.tprint(`Usage: run ${ns.getScriptName()} script [arguments]`);
-		ns.tprint("Example:");
+		ns.tprint('Example:');
 		ns.tprint(`> run ${ns.getScriptName()} hack-self.js`);
         return;
     }

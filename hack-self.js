@@ -2,9 +2,9 @@
 export async function main(ns) {
     const args = ns.flags([['help', false]]);
     if(args.help) {
-        ns.tprint("This script will generate money by hacking a target server.");
+        ns.tprint('This script will generate money by hacking a target server.');
         ns.tprint(`USAGE: run ${ns.getScriptName()}`);
-        ns.tprint("Example:");
+        ns.tprint('Example:');
         ns.tprint(`> run ${ns.getScriptName()}`);
         return;
     }
