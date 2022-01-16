@@ -1,3 +1,9 @@
+function numberFormat(num) {
+    let suffixes = ['','k','M','B','T']; // TODO: Are these sensible suffixes?
+    let e = Math.floor(Math.log(num) / Math.log(1000));
+    return (num / Math.pow(1000, e)).toFixed(2) + suffixes[e];
+}
+
 /** @param {NS} ns **/
 export async function main(ns) {
     const args = ns.flags([['help', false]]);
@@ -10,6 +16,7 @@ export async function main(ns) {
     }
 
     ns.disableLog('sleep');
+    ns.disableLog('stock.sell');
 
     while (true) {
         const stocks = ns.stock.getSymbols().sort(function (a, b) { return ns.stock.getForecast(b) - ns.stock.getForecast(a); })
@@ -19,8 +26,8 @@ export async function main(ns) {
             if ((shares > 0) && (forecast < 0.5)) {
                 const sellPricePerShare = ns.stock.sell(stock, shares);
                 const sellPrice = sellPricePerShare * shares;
-                const estProfit = sellPrice - (avgPx * shares);
-                ns.tprint(`Sold ${shares} of ${stock} for $${sellPrice} (estimate profit: $${estProfit})`);
+                const estProfit = sellPrice - (shares * avgPx);
+                ns.print(`Sold ${numberFormat(shares)} shares of ${stock} for $${numberFormat(sellPrice)} for $${numberFormat(estProfit)} profit`);
             }
         }
         await ns.sleep(6000);
