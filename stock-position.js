@@ -26,7 +26,8 @@ export async function main(ns) {
         const [shares, avgPx, sharesShort, avgPxShort] = ns.stock.getPosition(stock);
         if (shares > 0) {
             const value = stockPositionInDollars(ns, stock);
-            ns.tprint(`${stock.padStart(4)}: ${numberFormat(shares)} shares totalling $${numberFormat(value)}`);
+            const estProfit = value - (shares * avgPx);
+            ns.tprint(`${stock.padStart(4)}: ${numberFormat(shares)} shares totalling $${numberFormat(value)} ($${numberFormat(estProfit)} profit)`);
         }
     }
 }
