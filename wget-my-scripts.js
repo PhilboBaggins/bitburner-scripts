@@ -18,10 +18,10 @@ export async function main(ns) {
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'just-weaken.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'killall-everywhere.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'll.js');
-    //await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-grow.js');
-    //await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-hack.js');
+    await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-grow.js');
+    await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-hack.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-script.js');
-    //await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-weaken.js');
+    await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'max-weaken.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'ns.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'script-info.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'stock-auto-sell.js');
