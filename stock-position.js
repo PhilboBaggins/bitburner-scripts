@@ -7,8 +7,7 @@ function numberFormat(num) {
 
 function stockPositionInDollars(ns, stock) {
     const [shares, avgPx, sharesShort, avgPxShort] = ns.stock.getPosition(stock);
-    const couldSellFor = ns.stock.getSaleGain(stock, shares, 'Long');
-    return shares * couldSellFor;
+    return ns.stock.getSaleGain(stock, shares, 'Long');
 }
 
 /** @param {NS} ns **/
