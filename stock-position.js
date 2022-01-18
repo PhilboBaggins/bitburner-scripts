@@ -1,8 +1,5 @@
-
-function numberFormat(num) {
-    let suffixes = ['','k','M','B','T'];
-    let e = Math.floor(Math.log(num) / Math.log(1000));
-    return (num / Math.pow(1000, e)).toFixed(2) + suffixes[e];
+function numberFormat(ns, num) {
+    return ns.nFormat(num, '0.000a').padStart(8);
 }
 
 function stockPositionInDollars(ns, stock) {
@@ -27,7 +24,7 @@ export async function main(ns) {
         if (shares > 0) {
             const value = stockPositionInDollars(ns, stock);
             const estProfit = value - (shares * avgPx);
-            ns.tprint(`${stock.padStart(4)}: ${numberFormat(shares)} shares totalling $${numberFormat(value)} ($${numberFormat(estProfit)} profit)`);
+            ns.tprint(`${stock.padStart(4)}: ${numberFormat(ns, shares)} shares totalling $${numberFormat(ns, value)} ($${numberFormat(ns, estProfit)} profit)`);
         }
     }
 }

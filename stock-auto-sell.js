@@ -1,7 +1,5 @@
-function numberFormat(num) {
-    let suffixes = ['','k','M','B','T']; // TODO: Are these sensible suffixes?
-    let e = Math.floor(Math.log(num) / Math.log(1000));
-    return (num / Math.pow(1000, e)).toFixed(2) + suffixes[e];
+function numberFormat(ns, num) {
+    return ns.nFormat(num, '0.000a').padStart(8);
 }
 
 /** @param {NS} ns **/
@@ -27,7 +25,7 @@ export async function main(ns) {
                 const sellPricePerShare = ns.stock.sell(stock, shares);
                 const sellPrice = sellPricePerShare * shares;
                 const estProfit = sellPrice - (shares * avgPx);
-                ns.print(`Sold ${numberFormat(shares)} shares of ${stock} for $${numberFormat(sellPrice)} for $${numberFormat(estProfit)} profit`);
+                ns.print(`Sold ${numberFormat(ns, shares)} shares of ${stock.padEnd(4)} for $${numberFormat(ns, sellPrice)} for $${numberFormat(ns, estProfit)} profit`);
             }
         }
         await ns.sleep(6000);
