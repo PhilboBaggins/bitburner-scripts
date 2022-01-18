@@ -9,6 +9,7 @@ async function wgetScript(ns, baseURL, fileName) {
 
 /** @param {NS} ns **/
 export async function main(ns) {
+    await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, '1001.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'auto-root.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'deploy-to-all.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'find-file.js');
