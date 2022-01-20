@@ -28,6 +28,6 @@ export async function main(ns) {
                 ns.print(`Sold ${numberFormat(ns, shares)} shares of ${stock.padEnd(4)} for $${numberFormat(ns, sellPrice)} for $${numberFormat(ns, estProfit)} profit`);
             }
         }
-        await ns.sleep(6000);
+        await ns.sleep(3 * 1000);
     }
 }
