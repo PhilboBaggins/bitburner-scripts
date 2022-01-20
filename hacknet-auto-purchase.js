@@ -1,4 +1,3 @@
-
 const SECONDS_IN_A_WEEK = 60 * 60 * 24 * 7;
 const RESERVE_CASH = 1000;
 
@@ -20,7 +19,7 @@ function allNodesMaxedOut(ns) {
 export async function main(ns) {
 	const args = ns.flags([['help', false]]);
 	if (args.help) {
-		ns.tprint(`Automatically purchase and upgrade hacknet nodes`);
+		ns.tprint('Automatically purchase and upgrade hacknet nodes');
 		ns.tprint(`Usage: run ${ns.getScriptName()}`);
 		ns.tprint('Example:');
 		ns.tprint(`> run ${ns.getScriptName()}`);
@@ -55,8 +54,7 @@ export async function main(ns) {
 		if (allNodesMaxedOut(ns)) {
 			// ... check to see if we it seems worth buying more servers
 			// TODO: Is one week's production a sensible value?
-			let productionPerSecond = ns.hacknet.getNodeStats(0).production * ns.hacknet.numNodes(); // Can assume all nodes produce at the same rate because they are all upgraded
-			let maxProductionFor1Week = productionPerSecond * SECONDS_IN_A_WEEK;
+			let maxProductionFor1Week = ns.hacknet.getNodeStats(0).production * SECONDS_IN_A_WEEK;
 			if (ns.hacknet.getPurchaseNodeCost() >= maxProductionFor1Week) {
 				ns.print("Maxed out all existing hacknet nodes :) ... and it doesn't seem worth buying any more");
 				return;
