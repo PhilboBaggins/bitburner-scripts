@@ -25,7 +25,9 @@ export async function main(ns) {
                 const sellPricePerShare = ns.stock.sell(stock, shares);
                 const sellPrice = sellPricePerShare * shares;
                 const estProfit = sellPrice - (shares * avgPx);
-                ns.print(`Sold ${numberFormat(ns, shares)} shares of ${stock.padEnd(4)} for $${numberFormat(ns, sellPrice)} for $${numberFormat(ns, estProfit)} profit`);
+                let msg = `Sold ${numberFormat(ns, shares)} shares of ${stock.padEnd(4)} for $${numberFormat(ns, sellPrice)} for $${numberFormat(ns, estProfit)} profit`;
+                ns.print(msg);
+                ns.toast(msg);
             }
         }
         await ns.sleep(3 * 1000);
