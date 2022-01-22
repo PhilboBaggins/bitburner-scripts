@@ -11,6 +11,7 @@ export async function execAndWait(ns, childScript, host, numThreads, ...childScr
     }
 }
 
+// Scan for all servers and run an async callbacck function for each
 export async function scanAndRun(ns, parent, server, asyncFunc) {
 	const children = ns.scan(server);
 	for (let child of children) {
@@ -20,6 +21,23 @@ export async function scanAndRun(ns, parent, server, asyncFunc) {
 		await asyncFunc(child);
 		await scanAndRun(ns, server, child, asyncFunc);
 	}
+}
+
+// Scan for all servers and return a list of all those found
+export function listServers(ns) {
+    var retVal = [];
+    function scan(parent, server) {
+        const children = ns.scan(server);
+        for (let child of children) {
+            if (parent == child) {
+                continue;
+            }
+            retVal.push(child);
+            scan(server, child);
+        }
+    }
+    scan('', 'home');
+    return retVal;
 }
 
 export function numberFormat(ns, num) {

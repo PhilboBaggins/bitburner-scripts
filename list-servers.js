@@ -1,18 +1,4 @@
-function listServers(ns) {
-    var retVal = [];
-    function scan(parent, server) {
-        const children = ns.scan(server);
-        for (let child of children) {
-            if (parent == child) {
-                continue;
-            }
-            retVal.push(child);
-            scan(server, child);
-        }
-    }
-    scan('', 'home');
-    return retVal;
-}
+import { listServers } from './common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {
