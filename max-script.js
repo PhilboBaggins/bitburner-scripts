@@ -14,6 +14,6 @@ export async function main(ns) {
     const threads = Math.floor((ns.getServerMaxRam(ns.getHostname()) - ns.getServerUsedRam(ns.getHostname())) / ns.getScriptRam(childScript));
     ns.tprint(`Launching script '${childScript}' with ${threads} threads`);
     if (threads > 0) {
-        ns.exec(childScript, ns.getHostname(), threads, ...childScriptArgs);
+        ns.spawn(childScript, threads, ...childScriptArgs);
     }
 }
