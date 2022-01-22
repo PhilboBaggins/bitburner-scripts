@@ -11,6 +11,10 @@ export async function execAndWait(ns, childScript, host, numThreads, ...childScr
     }
 }
 
+export async function execAndWaitSimple(ns, childScript, ...childScriptArgs) {
+    await execAndWait(ns, childScript, ns.getHostname(), 1, ...childScriptArgs);
+}
+
 // Scan for all servers and run an async callbacck function for each
 // TODO: Consider starting scan from something other than 'home'
 export async function scanAndRun(ns, asyncFunc) {
