@@ -30,6 +30,7 @@ export async function main(ns) {
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'stock-auto-manipulate.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'stock-auto-sell.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'stock-grow.js');
+    await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'stock-infojs');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'stock-position.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'stock-weaken.js');
     await wgetScript(ns, PHILBO_BAGGINS_REPO_BASE_URL, 'wget-my-scripts.js'); // This script

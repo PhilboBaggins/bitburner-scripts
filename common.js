@@ -75,15 +75,23 @@ export function createTable(ns, columnNames) {
             ns.tprint(...tableBorder);
         },
         printRow: function(ns, ...cellValues) {
-            let printArgs = [];
-            printArgs.push('| ');
-            for (var i = 0; i < columnNames.length; i++) {
-                let cellVal = cellValues[i]; // TODO: What if caller didn't supply enough args?
-                let colTitle = columnNames[i];
-                printArgs.push(cellVal.padStart(colTitle.length));
-                printArgs.push(' | ');
+            if (cellValues.length == columnNames.length) {
+                let printArgs = [];
+                printArgs.push('| ');
+                for (var i = 0; i < columnNames.length; i++) {
+                    let cellVal = cellValues[i];
+                    let colTitle = columnNames[i];
+                    printArgs.push(cellVal.padStart(colTitle.length));
+                    printArgs.push(' | ');
+                }
+                ns.tprint(...printArgs);
+            } else {
+                ns.tprint('Invalid number of arguements given to `printRow()`');
             }
-            ns.tprint(...printArgs);
         }
     };
+}
+
+export function getStockTotalValue(ns, stock) {
+    return ns.stock.getAskPrice(stock) * ns.stock.getMaxShares(stock);
 }
