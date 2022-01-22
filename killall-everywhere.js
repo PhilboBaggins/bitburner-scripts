@@ -12,7 +12,7 @@ export async function main(ns) {
     }
 
     var serverKillCount = 0;
-    await scanAndRun(ns, '', 'home', async function(host) {
+    await scanAndRun(ns, async function(host) {
         let somethingWasKilled = ns.killall(host);
         if (somethingWasKilled)
             serverKillCount++;

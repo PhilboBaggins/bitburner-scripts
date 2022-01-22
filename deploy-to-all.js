@@ -22,7 +22,7 @@ export async function main(ns) {
         return;
     }
 
-    await scanAndRun(ns, '', 'home', async function(host) {
+    await scanAndRun(ns, async function(host) {
         const threads = Math.floor((ns.getServerMaxRam(host) - ns.getServerUsedRam(host)) / ns.getScriptRam(script));
         if (scriptArgs.length > 0) {
             ns.tprint(`Launching script '${script}' on server '${host}' with ${threads} threads and the following arguments: ${scriptArgs}`);

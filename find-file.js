@@ -13,7 +13,7 @@ export async function main(ns) {
     }
 
     var numFound = 0;
-    await scanAndRun(ns, '', 'home', async function(host) {
+    await scanAndRun(ns, async function(host) {
         let files = ns.ls(host, fileName);
         if (files.length > 0) {
             ns.tprint(`File found on '${host}'.`);

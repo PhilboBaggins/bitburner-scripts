@@ -35,7 +35,7 @@ export async function main(ns) {
     var numServersWithRoot = 0;
     var numServersWithRootNew = 0;
 
-    await scanAndRun(ns, '', 'home', async function(host) {
+    await scanAndRun(ns, async function(host) {
         ns.tprint(`${host}:`);
         numServers++;
 
