@@ -13,6 +13,10 @@ export async function main(ns) {
         return;
     }
 
+    // Game settings
+    const sleepTime = 3 * 1000; // 3 seconds
+    const commission = 100 * 1000; // $100,000
+
     ns.disableLog('sleep');
     ns.disableLog('stock.sell');
 
@@ -24,11 +28,12 @@ export async function main(ns) {
             if ((shares > 0) && (forecast < 0.5)) {
                 const sellPricePerShare = ns.stock.sell(stock, shares);
                 const sellPrice = sellPricePerShare * shares;
+                const estProfit = sellPrice - (shares * avgPx) - (2 * commission);
                 let msg = `Sold ${numberFormat(ns, shares)} shares of ${stock.padEnd(4)} for $${numberFormat(ns, sellPrice)} for $${numberFormat(ns, estProfit)} profit (${ns.nFormat(estProfit / sellPrice, '0%')})`;
                 ns.print(msg);
                 ns.toast(msg);
             }
         }
-        await ns.sleep(3 * 1000);
+        await ns.sleep(sleepTime);
     }
 }
