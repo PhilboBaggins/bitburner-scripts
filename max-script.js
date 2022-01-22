@@ -1,3 +1,5 @@
+import { threadsPossible } from './common.js'
+
 /** @param {NS} ns **/
 export async function main(ns) {
     const args = ns.flags([['help', false]]);
@@ -11,7 +13,8 @@ export async function main(ns) {
         return;
     }
 
-    const threads = Math.floor((ns.getServerMaxRam(ns.getHostname()) - ns.getServerUsedRam(ns.getHostname())) / ns.getScriptRam(childScript));
+
+    const threads = threadsPossible(ns, childScript,  ns.getHostname());
     ns.tprint(`Launching script '${childScript}' with ${threads} threads`);
     if (threads > 0) {
         ns.spawn(childScript, threads, ...childScriptArgs);

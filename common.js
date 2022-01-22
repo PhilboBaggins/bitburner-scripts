@@ -53,3 +53,7 @@ export function numberFormat(ns, num) {
 export function percentageToDecimal(percentage) {
     return percentage / 100.0;
 }
+
+export function threadsPossible(ns, script, hostname) {
+    return Math.floor((ns.getServerMaxRam(hostname) - ns.getServerUsedRam(hostname)) / ns.getScriptRam(script));
+}

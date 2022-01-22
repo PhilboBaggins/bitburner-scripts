@@ -1,3 +1,4 @@
+import { threadsPossible } from './common.js'
 
 function scriptType(script) {
     if (script.endsWith('.script')) {
@@ -7,11 +8,6 @@ function scriptType(script) {
     } else {
         return '???'
     }
-}
-
-function threadsPossible(ns, script) {
-    let hostname = ns.getHostname();
-    return '' + Math.floor((ns.getServerMaxRam(hostname) - ns.getServerUsedRam(hostname)) / ns.getScriptRam(script));
 }
 
 /** @param {NS} ns **/
@@ -48,6 +44,6 @@ export async function main(ns) {
         script.padEnd(COL_WIDTH_NAME),
         scriptType(script).padStart(COL_WIDTH_TYPE),
         ('' + ns.getScriptRam(script).toFixed(2)).padStart(COL_WIDTH_RAM),
-        threadsPossible(ns, script).padStart(COL_WIDTH_THEADS)
+        ('' + threadsPossible(ns, script, ns.getHostname())).padStart(COL_WIDTH_THEADS)
     ));
 }
