@@ -17,12 +17,31 @@ export async function main(ns) {
 
     // List of running stock manipulation (child) scripts
     let childScripts = {};
+    let runningTime = {};
 
     function killChildScript(stock, pid) {
         let killed = ns.kill(pid);
         if (killed) {
-            ns.print(`No longer manipulating ${stock.padEnd(4)}`);
             delete childScripts[stock];
+            const runningTime = getRunningTime(stock);
+            ns.print(`No longer manipulating ${stock.padEnd(4)} - Tried for ${runningTime}`);
+        }
+    }
+
+    function recordRunningTime(stock) {
+        if (!runningTime[stock]) {
+            runningTime[stock] = new Date();
+        }
+    }
+    function getRunningTime(stock) {
+        const endDate = new Date();
+        const startDate = runningTime[stock];
+        if (startDate) {
+            delete runningTime[stock];
+            const diffMilliseconds = endDate.getTime() - startDate.getTime();
+            return ns.tFormat(diffMilliseconds);
+        } else {
+            return '?????';
         }
     }
 
@@ -54,6 +73,7 @@ export async function main(ns) {
                         if (numThreads > 0) {
                             let pid = ns.exec('stock-grow.js', ns.getHostname(), numThreads, companySever);
                             if (pid) {
+                                recordRunningTime(stock);
                                 childScripts[stock] = pid;
                                 ns.print(`Manipulating ${stock.padEnd(4)} stock by growing ${companySever}`);
                             } else {
