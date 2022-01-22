@@ -5,17 +5,17 @@ export async function main(ns) {
     const args = ns.flags([['help', false]]);
     if (args.help || args._.length < 1) {
         ns.tprint('This script deploys another script to all servers and runs it with maximum threads possible.');
-		ns.tprint(`Usage: run ${ns.getScriptName()} script [arguments]`);
-		ns.tprint('Example:');
-		ns.tprint(`> run ${ns.getScriptName()} hack-self.js`);
+        ns.tprint(`Usage: run ${ns.getScriptName()} script [arguments]`);
+        ns.tprint('Example:');
+        ns.tprint(`> run ${ns.getScriptName()} hack-self.js`);
         return;
     }
 
     // TODO: Don't run on my own servers
     //const boughtServers = ns.getPurchasedServers(ns);
 
-	const script = args._[0];
-	const scriptArgs = args._.slice(1);
+    const script = args._[0];
+    const scriptArgs = args._.slice(1);
 
     if (ns.ls(ns.getHostname()).find(f => f === script) == false) {
         ns.tprint(`Script '${script}' does not exist. Aborting.`);

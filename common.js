@@ -14,7 +14,7 @@ export async function execAndWait(ns, childScript, host, numThreads, ...childScr
 // Scan for all servers and run an async callbacck function for each
 // TODO: Consider starting scan from something other than 'home'
 export async function scanAndRun(ns, asyncFunc) {
-	async function scanAndRunInner(ns, parent, server, asyncFunc) {
+    async function scanAndRunInner(ns, parent, server, asyncFunc) {
         const children = ns.scan(server);
         for (let child of children) {
             if (parent == child) {

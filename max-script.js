@@ -7,9 +7,9 @@ export async function main(ns) {
     const childScriptArgs = args._.slice(1);
     if (args.help || !childScript) {
         ns.tprint('Run another script with the maximum number of threads possible');
-		ns.tprint(`Usage: run ${ns.getScriptName()} script [args-for-child-script...]`);
-		ns.tprint('Example:');
-		ns.tprint(`> run ${ns.getScriptName()} just-hack.js n00dles`);
+        ns.tprint(`Usage: run ${ns.getScriptName()} script [args-for-child-script...]`);
+        ns.tprint('Example:');
+        ns.tprint(`> run ${ns.getScriptName()} just-hack.js n00dles`);
         return;
     }
 
