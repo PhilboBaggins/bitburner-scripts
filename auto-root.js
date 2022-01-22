@@ -1,14 +1,4 @@
-
-async function scanAndRun(ns, parent, server, asyncFunc) {
-    const children = ns.scan(server);
-    for (let child of children) {
-        if (parent == child) {
-            continue;
-        }
-        await asyncFunc(child);
-        await scanAndRun(ns, server, child, asyncFunc);
-    }
-}
+import { scanAndRun } from './common.js'
 
 function runExeIfAvailable(ns, host, exeName, func) {
     if (ns.fileExists(exeName, 'home')) {
