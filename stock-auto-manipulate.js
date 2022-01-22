@@ -1,79 +1,4 @@
-import { numberFormat } from './common.js'
-
-// TODO: What to do with this stock? Does it have a server??
-//WDS   = Watchdog Security
-
-const STOCK_TO_SERVER = {
-    'FSIG': '4sigma', // Four Sigma
-    'AERO': 'aerocorp', // AeroCorp
-    //'': 'aevum-police',
-    'APHE': 'alpha-ent', // Alpha Enterprises
-    //'': 'applied-energetics',
-    //'': 'avmnite-02h',
-    //'': 'b-and-a',
-    'BLD': 'blade', // Blade Industries
-    'CTYS': 'catalyst', // Catalyst Ventures
-    'CLRK': 'clarkinc', // Clark Incorporated
-    'CTK': 'comptek', // CompuTek
-    //'': 'crush-fitness',
-    //'': 'CSEC',
-    //'': 'darkweb',
-    'DCOMM': 'defcomm', // Defcomm
-    //'': 'deltaone',
-    'ECP': 'ecorp', // ECorp
-    'FNS': 'foodnstuff', // FoodNStuff
-    //'': 'fulcrumassets', // Maybe "Fulcrum Technologies" too????????????????????????
-    'FLCM': 'fulcrumtech', // Fulcrum Technologies
-    //'': 'galactic-cyber',
-    'GPH': 'global-pharm', // Global Pharmaceuticals
-    //'': 'harakiri-sushi',
-    'HLS': 'helios', // Helios Labs
-    //'': 'hong-fang-tea',
-    //'': 'I.I.I.I',
-    'ICRS': 'icarus', // Icarus Microsystems
-    //'': 'infocomm',
-    //'': 'iron-gym',
-    'JGN': 'joesguns', // Joes Guns
-    //'': 'johnson-ortho',
-    'KGI': 'kuai-gong', // KuaiGong International
-    'LXO': 'lexo-corp', // LexoCorp
-    //'': 'max-hardware',
-    'MGCP': 'megacorp', // MegaCorp
-    'MDYN': 'microdyne', // Microdyne Technologies
-    //'': 'millenium-fitness',
-    //'': 'n00dles',
-    //'': 'nectar-net',
-    //'': 'neo-net',
-    'NTLK': 'netlink', // NetLink Technologies
-    'NVMD': 'nova-med', // Nova Medical
-    //'': 'nwo',
-    'OMGA': 'omega-net', // Omega Software
-    'OMN': 'omnia', // Omnia Cybersystems
-    'OMTK': 'omnitek', // OmniTek Incorporated
-    //'': 'phantasy',
-    //'': 'powerhouse-fitness',
-    'RHOC': 'rho-construction', // Rho Construction
-    //'': 'rothman-uni',
-    //'': 'run4theh111z',
-    'SGC': 'sigma-cosmetics', // Sigma Cosmetics
-    //'': 'silver-helix',
-    //'': 'snap-fitness',
-    'SLRS': 'solaris', // Solaris Space Systems
-    'STM': 'stormtech', // Storm Technologies
-    //'': 'summit-uni',
-    'SYSC': 'syscore', // SysCore Securities
-    //'': 'taiyang-digital',
-    //'': 'The-Cave',
-    //'': 'the-hub',
-    'TITN': 'titan-labs', // Titan Laboratories
-    //'': 'unitalife',
-    'UNV': 'univ-energy', // Universal Energy
-    'VITA': 'vitalife', // VitaLife
-    //'': 'zb-def',
-    //'': 'zb-institute',
-    //'': 'zer0',
-    //'': 'zeus-med',
-}
+import { getServerForStock } from './common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -119,12 +44,12 @@ export async function main(ns) {
         const stocks = ns.stock.getSymbols().sort(function (a, b) { return ns.stock.getForecast(b) - ns.stock.getForecast(a); })
         for (const stock of stocks) {
             const [shares, avgPx, sharesShort, avgPxShort] = ns.stock.getPosition(stock);
-            let companySever = STOCK_TO_SERVER[stock];
+            let companySever = getServerForStock(stock);
             if (companySever) {
                 if (shares > 0) {
                     // Start a stock manipulation script (if not already running one)
                     if (!childScripts[stock]) {
-                        // TODO: How many threads????????????????????????????????????????????????
+                        // TODO: How many threads????????????????????????????????????????????????????
                         let numThreads = 15000; //???????????????????????
                         if (numThreads > 0) {
                             let pid = ns.exec('stock-grow.js', ns.getHostname(), numThreads, companySever);
