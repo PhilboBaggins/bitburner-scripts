@@ -1,4 +1,4 @@
-import { createTable, numberFormat, getStockTotalValue } from './common.js'
+import { createTable, numberFormat, getStockTotalValue, getServerForStock } from './common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -18,6 +18,7 @@ export async function main(ns) {
         'Max shares',
         'Ask price',
         'Value'.padStart(8),
+        'Grow time'.padStart(30),
     ]);
 
     const stocks = ns.stock.getSymbols().sort(function (a, b) {
@@ -25,13 +26,18 @@ export async function main(ns) {
     })
 
     table.printHeader(ns);
-    stocks.forEach(stock => table.printRow(ns,
-        stock,
-        ns.nFormat(ns.stock.getForecast(stock), '0.00%'),
-        ns.nFormat(ns.stock.getVolatility(stock), '0.00%'),
-        numberFormat(ns, ns.stock.getMaxShares(stock)),
-        numberFormat(ns, ns.stock.getAskPrice(stock)),
-        numberFormat(ns, getStockTotalValue(ns, stock)),
-    ));
+    for (const stock of stocks) {
+        let companyServer = getServerForStock(stock);
+        let growTime = companyServer ? ns.tFormat(ns.getGrowTime(companyServer)) : '';
+        table.printRow(ns,
+            stock,
+            ns.nFormat(ns.stock.getForecast(stock), '0.00%'),
+            ns.nFormat(ns.stock.getVolatility(stock), '0.00%'),
+            numberFormat(ns, ns.stock.getMaxShares(stock)),
+            numberFormat(ns, ns.stock.getAskPrice(stock)),
+            numberFormat(ns, getStockTotalValue(ns, stock)),
+            growTime,
+        );
+    }
     table.printHeader(ns);
 }
