@@ -57,3 +57,33 @@ export function percentageToDecimal(percentage) {
 export function threadsPossible(ns, script, hostname) {
     return Math.floor((ns.getServerMaxRam(hostname) - ns.getServerUsedRam(hostname)) / ns.getScriptRam(script));
 }
+
+export function createTable(ns, columnNames) {
+    let tableBorder = [];
+    let tableHeading = [];
+    tableBorder.push('+');
+    tableHeading.push('| ');
+    for (const colName of columnNames) {
+        tableBorder.push('+'.padStart(3 + colName.length, '-'));
+        tableHeading.push((colName + ' | ').padStart(colName.length, ' '));
+    }
+
+    return {
+        printHeader: function(ns) {
+            ns.tprint(...tableBorder);
+            ns.tprint(...tableHeading);
+            ns.tprint(...tableBorder);
+        },
+        printRow: function(ns, ...cellValues) {
+            let printArgs = [];
+            printArgs.push('| ');
+            for (var i = 0; i < columnNames.length; i++) {
+                let cellVal = cellValues[i]; // TODO: What if caller didn't supply enough args?
+                let colTitle = columnNames[i];
+                printArgs.push(cellVal.padStart(colTitle.length));
+                printArgs.push(' | ');
+            }
+            ns.tprint(...printArgs);
+        }
+    };
+}

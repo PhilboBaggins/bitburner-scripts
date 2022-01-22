@@ -1,4 +1,4 @@
-import { threadsPossible } from './common.js'
+import { threadsPossible, createTable } from './common.js'
 
 function scriptType(script) {
     if (script.endsWith('.script')) {
@@ -21,29 +21,27 @@ export async function main(ns) {
         return;
     }
 
-    let COL_WIDTH_NAME = 30;
-    let COL_WIDTH_TYPE = 5;
-    let COL_WIDTH_RAM = 20;
-    let COL_WIDTH_THEADS = 20;
-
-    let scripts1 = ns.ls('home', '.script');
-    let scripts2 = ns.ls('home', '.js');
-    let scripts = scripts1.concat(scripts2);
-
-    ns.tprint('-'.padStart(80, '-'));
-    ns.tprint(
+    const COL_WIDTH_NAME = 30;
+    const COL_WIDTH_TYPE = 5;
+    const COL_WIDTH_RAM = 10;
+    const COL_WIDTH_THEADS = 20;
+    const table = createTable(ns, [
         'Script'.padEnd(COL_WIDTH_NAME),
         'Type'.padStart(COL_WIDTH_TYPE),
         'RAM needed'.padStart(COL_WIDTH_RAM),
-        'Threads possible'.padStart(COL_WIDTH_THEADS),
-    );
+        'Threads possible'.padStart(COL_WIDTH_THEADS)
+    ]);
 
-    ns.tprint('-'.padStart(80, '-'));
+    const scripts1 = ns.ls('home', '.script');
+    const scripts2 = ns.ls('home', '.js');
+    const scripts = scripts1.concat(scripts2);
 
-    scripts.forEach(script => ns.tprint(
-        script.padEnd(COL_WIDTH_NAME),
-        scriptType(script).padStart(COL_WIDTH_TYPE),
-        ('' + ns.getScriptRam(script).toFixed(2)).padStart(COL_WIDTH_RAM),
-        ('' + threadsPossible(ns, script, ns.getHostname())).padStart(COL_WIDTH_THEADS)
+    table.printHeader(ns);
+    scripts.forEach(script => table.printRow(ns,
+        script,
+        scriptType(script),
+        ('' + ns.getScriptRam(script).toFixed(2)),
+        ('' + threadsPossible(ns, script, ns.getHostname()))
     ));
+    table.printHeader(ns);
 }

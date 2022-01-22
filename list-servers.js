@@ -1,4 +1,4 @@
-import { listServers } from './common.js'
+import { listServers, createTable } from './common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -11,60 +11,33 @@ export async function main(ns) {
         return;
     }
 
-    let colWidthHostName = 20;
-    let colWidthHackingSkill = 10;
-    let colWidthAdmin = 10;
-    let colWidthBackdoor = 10;
-    let colWidthCash = 10;
-    let colWidthRam = 10 + 1;
+    let table = createTable(ns, [
+        'Server name'.padEnd(20),
+        'Level'.padEnd(10),
+        'Admin?'.padEnd(10),
+        'Backdoor?'.padEnd(10),
+        'Cash'.padEnd(10),
+        'Ram'.padEnd(6),
+        'Ram used'.padEnd(5),
+    ]);
 
-    function printTableHeader() {
-        ns.tprint(
-            '+'.padEnd(3 + colWidthHostName, '-'),
-            '+'.padEnd(3 + colWidthHackingSkill, '-'),
-            '+'.padEnd(3 + colWidthAdmin, '-'),
-            '+'.padEnd(3 + colWidthBackdoor, '-'),
-            '+'.padEnd(3 + colWidthCash, '-'),
-            '+'.padEnd(3 + colWidthRam, '-'),
-            '+'
-        );
-        ns.tprint(
-            '| Server name'.padEnd(2 + colWidthHostName),
-            ' | Level'.padEnd(3 + colWidthHackingSkill),
-            ' | Admin?'.padEnd(3 + colWidthAdmin),
-            ' | Backdoor?'.padEnd(3 + colWidthBackdoor),
-            ' | Cash'.padEnd(3 + colWidthCash),
-            ' | Ram'.padEnd(3 + colWidthRam),
-            ' |'
-        );
-        ns.tprint(
-            '+'.padEnd(3 + colWidthHostName, '-'),
-            '+'.padEnd(3 + colWidthHackingSkill, '-'),
-            '+'.padEnd(3 + colWidthAdmin, '-'),
-            '+'.padEnd(3 + colWidthBackdoor, '-'),
-            '+'.padEnd(3 + colWidthCash, '-'),
-            '+'.padEnd(3 + colWidthRam, '-'),
-            '+'
-        );
-    }
     const servers = listServers(ns).sort(function (a, b) {
         return ns.getServer(b).requiredHackingSkill - ns.getServer(a).requiredHackingSkill;
     });
 
-    printTableHeader();
+    table.printHeader(ns);
     for (const server of servers) {
         const host = ns.getServer(server);
-        ns.tprint(
-            '| ', server.padEnd(colWidthHostName),
-            ' | ', ns.nFormat(host.requiredHackingSkill, '0').padStart(colWidthHackingSkill),
-            ' | ', (host.hasAdminRights) ? 'Yes'.padStart(colWidthAdmin) : ''.padStart(colWidthAdmin),
-            ' | ', (host.backdoorInstalled) ? 'Yes'.padStart(colWidthBackdoor) : ''.padStart(colWidthBackdoor),
-            ' | ', ns.nFormat(host.moneyAvailable, '0.0a').padStart(colWidthCash),
-            ' | ', ns.nFormat(host.maxRam, '0.0a').padStart(colWidthRam / 2), 'G', 
-                   ns.nFormat(Math.ceil(host.ramUsed / host.maxRam), '0%').padStart(colWidthRam / 2),
-            ' |'
+        table.printRow(ns,
+            server,
+            ns.nFormat(host.requiredHackingSkill, '0'),
+            (host.hasAdminRights) ? 'Yes' : '',
+            (host.backdoorInstalled) ? 'Yes' : '',
+            ns.nFormat(host.moneyAvailable, '0.0a'),
+            ns.nFormat(host.maxRam, '0.0a') + 'G',
+            ns.nFormat(Math.ceil(host.ramUsed / host.maxRam), '0%'),
         );
     };
-    printTableHeader();
+    table.printHeader(ns);
     ns.tprint(`Number of servers: ${servers.length}`);
 }
