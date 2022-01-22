@@ -61,7 +61,7 @@ export async function main(ns) {
 			}
 
 			// ... or purchase new nodes when I can afford them
-			while ((ns.hacknet.numNodes() < MAX_HACKNET_NODES) && (cashAvail() >= ns.hacknet.getPurchaseNodeCost())) {
+			while (cashAvail() >= ns.hacknet.getPurchaseNodeCost()) {
 				ns.print('Purchasing new hacknet node');
 				ns.hacknet.purchaseNode();
 			}
