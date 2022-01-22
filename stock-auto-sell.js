@@ -1,6 +1,4 @@
-function numberFormat(ns, num) {
-    return ns.nFormat(num, '0.000a').padStart(8);
-}
+import { numberFormat } from './common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {

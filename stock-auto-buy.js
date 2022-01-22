@@ -1,10 +1,4 @@
-function numberFormat(ns, num) {
-    return ns.nFormat(num, '0.000a').padStart(8);
-}
-
-function percentageToDecimal(percentage) {
-    return percentage / 100.0;
-}
+import { numberFormat, percentageToDecimal } from './common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {

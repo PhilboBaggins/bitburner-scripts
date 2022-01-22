@@ -1,7 +1,7 @@
-/*
-WDS   = Watchdog Security
-*/
+import { numberFormat } from './common.js'
 
+// TODO: What to do with this stock? Does it have a server??
+WDS   = Watchdog Security
 
 const STOCK_TO_SERVER = {
     'FSIG': '4sigma', // Four Sigma
@@ -73,10 +73,6 @@ const STOCK_TO_SERVER = {
     //'': 'zb-institute',
     //'': 'zer0',
     //'': 'zeus-med',
-}
-
-function numberFormat(ns, num) {
-    return ns.nFormat(num, '0.000a').padStart(8);
 }
 
 /** @param {NS} ns **/

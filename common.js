@@ -21,3 +21,11 @@ export async function scanAndRun(ns, parent, server, asyncFunc) {
 		await scanAndRun(ns, server, child, asyncFunc);
 	}
 }
+
+export function numberFormat(ns, num) {
+    return ns.nFormat(num, '0.000a').padStart(8);
+}
+
+export function percentageToDecimal(percentage) {
+    return percentage / 100.0;
+}
