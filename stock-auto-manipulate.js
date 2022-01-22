@@ -1,7 +1,7 @@
 import { numberFormat } from './common.js'
 
 // TODO: What to do with this stock? Does it have a server??
-WDS   = Watchdog Security
+//WDS   = Watchdog Security
 
 const STOCK_TO_SERVER = {
     'FSIG': '4sigma', // Four Sigma
