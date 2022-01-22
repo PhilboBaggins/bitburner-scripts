@@ -16,6 +16,9 @@ export async function main(ns) {
         return;
     }
 
+    // Game settings
+    const commission = 100 * 1000; // $100,000
+
     var totalShares = 0;
     var totalValue = 0;
     var totalProfit = 0;
@@ -24,9 +27,8 @@ export async function main(ns) {
         const [shares, avgPx, sharesShort, avgPxShort] = ns.stock.getPosition(stock);
         if (shares > 0) {
             const value = stockPositionInDollars(ns, stock);
-            const estProfit = value - (shares * avgPx);
+            const estProfit = value - (shares * avgPx) - (2 * commission);
             ns.tprint(`${stock.padStart(5)}: ${numberFormat(ns, shares)} shares valued at $${numberFormat(ns, value)} with a potential profit of $${numberFormat(ns, estProfit)} (${ns.nFormat(estProfit / value, '0%').padStart(4)})`);
-
             totalShares += shares;
             totalValue += value;
             totalProfit += estProfit;
