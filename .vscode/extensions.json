@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "bitburner.bitburner-vscode-integration"
+        "bitburner.bitburner-vscode-integration",
+        "editorconfig.editorconfig"
     ]
 }
