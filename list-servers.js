@@ -25,19 +25,78 @@ export async function main(ns) {
         return ns.getServer(b).requiredHackingSkill - ns.getServer(a).requiredHackingSkill;
     });
 
+    let total    = { 'level': 0, 'admin': 0, 'backdoor': 0, 'cash': 0, 'maxRam': 0, 'ramUsed': 0 };
+    let hackable = { 'level': 0, 'admin': 0, 'backdoor': 0, 'cash': 0, 'maxRam': 0, 'ramUsed': 0 };
+    let numHackable = 0;
+
+    function printRow(name, level, admin, backdoor, cash, maxRam, ramUsed) {
+        table.printRow(ns,
+            name,
+            ns.nFormat(level, '0'),
+            admin ? 'Yes' : '',
+            backdoor ? 'Yes' : '',
+            ns.nFormat(cash, '0.0a'),
+            ns.nFormat(maxRam, '0.0a') + 'G',
+            ns.nFormat(ramUsed, '0%'),
+        );
+    }
+
+    function addRowTotals(name, totalsObj) {
+        table.printRow(ns,
+            name,
+            '', // No point showing the total levels
+            ns.nFormat(totalsObj['admin'],    '0.0a'),
+            ns.nFormat(totalsObj['backdoor'], '0.0a'),
+            ns.nFormat(totalsObj['cash'],     '0.0a'),
+            ns.nFormat(totalsObj['maxRam'],   '0.0a') + 'G',
+            ns.nFormat(totalsObj['ramUsed'],  '0%'),
+        );
+    }
+
+    function addRowAverage(name, totalsObj, num) {
+        table.printRow(ns,
+            name,
+            ns.nFormat(totalsObj['level']    / num, '0.0a'),
+            ns.nFormat(totalsObj['admin']    / num, '0%'),
+            ns.nFormat(totalsObj['backdoor'] / num, '0%'),
+            ns.nFormat(totalsObj['cash']     / num, '0.0a'),
+            ns.nFormat(totalsObj['maxRam']   / num, '0.0a') + 'G',
+            ns.nFormat(totalsObj['ramUsed']  / num, '0%'),
+        );
+    }
+
+    function addToTotals(server, level, admin, backdoor, cash, maxRam, ramUsed) {
+        total['level'] += level;
+        total['admin'] += admin ? 1 : 0;
+        total['backdoor'] += backdoor ? 1 : 0;
+        total['cash'] += cash;
+        total['maxRam'] += maxRam;
+        total['ramUsed'] += ramUsed;
+
+        if ((level <= ns.getHackingLevel()) && !ns.getPurchasedServers().includes(server)) {
+            hackable['level'] += level;
+            hackable['admin'] += admin ? 1 : 0;
+            hackable['backdoor'] += backdoor ? 1 : 0;
+            hackable['cash'] += cash;
+            hackable['maxRam'] += maxRam;
+            hackable['ramUsed'] += ramUsed;
+            numHackable++;
+        }
+    }
+
     table.printHeader(ns);
     for (const server of servers) {
         const host = ns.getServer(server);
-        table.printRow(ns,
-            server,
-            ns.nFormat(host.requiredHackingSkill, '0'),
-            (host.hasAdminRights) ? 'Yes' : '',
-            (host.backdoorInstalled) ? 'Yes' : '',
-            ns.nFormat(host.moneyAvailable, '0.0a'),
-            ns.nFormat(host.maxRam, '0.0a') + 'G',
-            ns.nFormat(Math.ceil(host.ramUsed / host.maxRam), '0%'),
-        );
+        printRow(   server, host.requiredHackingSkill, host.hasAdminRights, host.backdoorInstalled, host.moneyAvailable, host.maxRam, Math.ceil(host.ramUsed / host.maxRam));
+        addToTotals(server, host.requiredHackingSkill, host.hasAdminRights, host.backdoorInstalled, host.moneyAvailable, host.maxRam, Math.ceil(host.ramUsed / host.maxRam));
     };
     table.printHeader(ns);
+    addRowTotals('Total:', total);
+    addRowTotals('Total (hackable):', hackable);
+    addRowAverage('Average:', total, servers.length);
+    addRowAverage('Average (hackable):', hackable, numHackable);
+    table.printHeader(ns);
+
     ns.tprint(`Number of servers: ${servers.length}`);
+    ns.tprint(`Number of hackable servers: ${numHackable}`);
 }
