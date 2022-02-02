@@ -39,7 +39,8 @@ export async function main(ns) {
         if (startDate) {
             delete runningTime[stock];
             const diffMilliseconds = endDate.getTime() - startDate.getTime();
-            return ns.tFormat(diffMilliseconds);
+            const lessThanGrowTime = diffMilliseconds < ns.getGrowTime(getServerForStock(stock));
+            return ns.tFormat(diffMilliseconds) + (lessThanGrowTime ? ' - less than grow time' : '');
         } else {
             return '?????';
         }
