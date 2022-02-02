@@ -1,4 +1,4 @@
-import { execAndWaitSimple } from './common.js'
+import { execAndWaitSimple } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {

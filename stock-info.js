@@ -1,4 +1,4 @@
-import { createTable, numberFormat, getStockTotalValue, getServerForStock } from './common.js'
+import { createTable, numberFormat, getStockTotalValue, getServerForStock } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {

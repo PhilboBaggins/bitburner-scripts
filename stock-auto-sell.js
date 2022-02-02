@@ -1,4 +1,4 @@
-import { numberFormat } from './common.js'
+import { numberFormat } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {

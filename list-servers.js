@@ -1,4 +1,4 @@
-import { listServers, createTable } from './common.js'
+import { listServers, createTable } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {

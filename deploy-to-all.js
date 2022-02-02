@@ -1,4 +1,4 @@
-import { scanAndRun } from './common.js'
+import { scanAndRun } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {

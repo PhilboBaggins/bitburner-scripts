@@ -1,4 +1,4 @@
-import { getServerForStock } from './common.js'
+import { getServerForStock } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {

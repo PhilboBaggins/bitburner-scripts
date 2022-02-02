@@ -1,4 +1,4 @@
-import { numberFormat, percentageToDecimal } from './common.js'
+import { numberFormat, percentageToDecimal } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {

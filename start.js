@@ -1,4 +1,4 @@
-import { printEverywhere, execAndWait } from './common.js'
+import { printEverywhere, execAndWait } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {

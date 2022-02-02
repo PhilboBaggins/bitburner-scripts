@@ -1,4 +1,4 @@
-import { scanAndRun } from './common.js'
+import { scanAndRun } from 'common.js'
 
 function runExeIfAvailable(ns, host, exeName, func) {
     if (ns.fileExists(exeName, 'home')) {

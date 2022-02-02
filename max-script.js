@@ -1,4 +1,4 @@
-import { threadsPossible } from './common.js'
+import { threadsPossible } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -12,7 +12,6 @@ export async function main(ns) {
         ns.tprint(`> run ${ns.getScriptName()} just-hack.js n00dles`);
         return;
     }
-
 
     const threads = threadsPossible(ns, childScript,  ns.getHostname());
     ns.tprint(`Launching script '${childScript}' with ${threads} threads`);
