@@ -13,6 +13,7 @@ export async function main(ns) {
 
     const table = createTable(ns, [
         'Stock symbol',
+        'Server'.padEnd(20),
         'Forecast',
         'Volatility',
         'Max shares',
