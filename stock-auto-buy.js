@@ -1,4 +1,4 @@
-import { numberFormat, percentageToDecimal } from 'common.js'
+import { gameConstants, numberFormat, percentageToDecimal } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -10,10 +10,6 @@ export async function main(ns) {
         ns.tprint(`> run ${ns.getScriptName()}`);
         return;
     }
-
-    // Game settings
-    const sleepTime = 3 * 1000; // 3 seconds
-    const commission = 100 * 1000; // $100,000
 
     // Configurables
     const reserveCash = 1000 * 1000 * 1000; // $1B
@@ -34,19 +30,19 @@ export async function main(ns) {
             const forecast = ns.stock.getForecast(stock);
             const maxShares = ns.stock.getMaxShares(stock) - shares;
             const moneyAvailable = ns.getServerMoneyAvailable('home');
-            const moneyToSpend = moneyAvailable - reserveCash - commission;
+            const moneyToSpend = moneyAvailable - reserveCash - gameConstants.stockMarket.commission;
             const sharesCanAfford = moneyToSpend / askPrice;
             const sharesToBuy = Math.min(sharesCanAfford, maxShares);
             const minExpectedPercentProfit = (askPrice * sharesToBuy) * percentageToDecimal(minExpectedIncreasePercentage);
             if ((sharesToBuy > 0) && (forecast >= minForcast) && (volPer <= maxVolatility)) {
                 // Only buy if our expected minimum profit will cover the cost of the buy/sell commissions
-                if (minExpectedPercentProfit > (2 * commission)) {
+                if (minExpectedPercentProfit > (2 * gameConstants.stockMarket.commission)) {
                     const buyPricePerShare = ns.stock.buy(stock, sharesToBuy);
                     const buyPrice = buyPricePerShare * sharesToBuy;
                     ns.print(`Bought ${numberFormat(ns, sharesToBuy)} shares of ${stock.padEnd(4)} for $${numberFormat(ns, buyPrice)}`);
                 }
             }
         }
-        await ns.sleep(sleepTime);
+        await ns.sleep(gameConstants.stockMarket.interval);
     }
 }

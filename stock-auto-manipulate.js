@@ -1,4 +1,4 @@
-import { getServerForStock } from 'common.js'
+import { gameConstants, getServerForStock } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -91,6 +91,6 @@ export async function main(ns) {
                 }
             }
         }
-        await ns.sleep(3 * 1000);
+        await ns.sleep(gameConstants.stockMarket.interval);
     }
 }

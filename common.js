@@ -1,3 +1,11 @@
+
+export const gameConstants = {
+    'stockMarket': {
+        'interval':     3 * 1000, // 3 seconds
+        'commission': 100 * 1000, // $100,000
+    }
+}
+
 export function printEverywhere(ns, ...msg) {
     ns.print(...msg);
     ns.tprint(...msg);
