@@ -13,7 +13,7 @@ export async function main(ns) {
 
     // Configurables
     const reserveCash = 1000 * 1000 * 1000; // $1B
-    const minForcast = percentageToDecimal(60); // Buy stocks that are at least this likely to increase in value
+    const minForcast = percentageToDecimal(55); // Buy stocks that are at least this likely to increase in value
     const maxVolatility = percentageToDecimal(5); // Don't by stocks more volatile than this. TODO: Is this sensible? Maybe I should consider volatility and forcase together somehow, e.g. buy if (forecast - volatility) > 55%
     const minExpectedIncreasePercentage = 2;
 
