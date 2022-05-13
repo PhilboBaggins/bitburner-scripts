@@ -119,7 +119,7 @@ const STOCK_TO_SERVER = {
     'BLD': 'blade', // Blade Industries
     'CTYS': 'catalyst', // Catalyst Ventures
     'CLRK': 'clarkinc', // Clark Incorporated
-    'CTK': 'comptek', // CompuTek
+    'CTK': 'computek', // CompuTek
     //'': 'crush-fitness',
     //'': 'CSEC',
     //'': 'darkweb',
