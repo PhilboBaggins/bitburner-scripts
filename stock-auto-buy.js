@@ -28,18 +28,19 @@ export async function main(ns) {
             const volPer = ns.stock.getVolatility(stock);
             const askPrice = ns.stock.getAskPrice(stock);
             const forecast = ns.stock.getForecast(stock);
-            const maxShares = ns.stock.getMaxShares(stock) - shares;
+            const maxShares = ns.stock.getMaxShares(stock)
+            const availableShares = maxShares - shares;
             const moneyAvailable = ns.getServerMoneyAvailable('home');
             const moneyToSpend = moneyAvailable - reserveCash - gameConstants.stockMarket.commission;
             const sharesCanAfford = moneyToSpend / askPrice;
-            const sharesToBuy = Math.min(sharesCanAfford, maxShares);
+            const sharesToBuy = Math.min(sharesCanAfford, availableShares);
             const minExpectedPercentProfit = (askPrice * sharesToBuy) * percentageToDecimal(minExpectedIncreasePercentage);
             if ((sharesToBuy > 0) && (forecast >= minForcast) && (volPer <= maxVolatility)) {
                 // Only buy if our expected minimum profit will cover the cost of the buy/sell commissions
                 if (minExpectedPercentProfit > (2 * gameConstants.stockMarket.commission)) {
                     const buyPricePerShare = ns.stock.buy(stock, sharesToBuy);
                     const buyPrice = buyPricePerShare * sharesToBuy;
-                    ns.print(`Bought ${numberFormat(ns, sharesToBuy)} shares of ${stock.padEnd(4)} for $${numberFormat(ns, buyPrice)}`);
+                    ns.print(`Bought ${ns.nFormat(sharesToBuy / maxShares, '0%')} of ${stock.padEnd(4)} shares for $${numberFormat(ns, buyPrice)}`);
                 }
             }
         }
