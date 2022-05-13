@@ -58,15 +58,15 @@ export async function main(ns) {
         // Upgrade all existing nodes
         for (let nodeIdx = 0; nodeIdx < ns.hacknet.numNodes(); nodeIdx++) {
             while (cashAvail() >= ns.hacknet.getCoreUpgradeCost(nodeIdx, 1)) {
-                ns.print(`Upgrading cores for hacknet node index ${nodeIdx}`)
+                ns.print(`Upgrading cores for hacknet node ${nodeIdx}`)
                 ns.hacknet.upgradeCore(nodeIdx, 1);
             }
             while (cashAvail() >= ns.hacknet.getLevelUpgradeCost(nodeIdx, 1)) {
-                ns.print(`Upgrading level for hacknet node index ${nodeIdx}`)
+                ns.print(`Upgrading level for hacknet node ${nodeIdx}`)
                 ns.hacknet.upgradeLevel(nodeIdx, 1);
             }
             while (cashAvail() >= ns.hacknet.getRamUpgradeCost(nodeIdx, 1)) {
-                ns.print(`Upgrading RAM for hacknet node index ${nodeIdx}`)
+                ns.print(`Upgrading RAM for hacknet node ${nodeIdx}`)
                 ns.hacknet.upgradeRam(nodeIdx, 1);
             }
         }
