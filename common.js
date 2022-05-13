@@ -108,7 +108,7 @@ export function getStockTotalValue(ns, stock) {
     return ns.stock.getAskPrice(stock) * ns.stock.getMaxShares(stock);
 }
 
-const STOCK_TO_SERVER = {
+export const STOCK_TO_SERVER = {
     'FSIG': '4sigma', // Four Sigma
     'AERO': 'aerocorp', // AeroCorp
     //'': 'aevum-police',
