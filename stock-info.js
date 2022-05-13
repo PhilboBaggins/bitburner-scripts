@@ -23,7 +23,7 @@ export async function main(ns) {
         'Volatility',
         'Max shares',
         'Ask price',
-        'Value'.padStart(8),
+        'Value'.padStart(9),
         'Grow time'.padStart(30),
     ]);
 
