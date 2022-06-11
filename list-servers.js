@@ -41,7 +41,7 @@ export async function main(ns) {
         );
     }
 
-    function addRowTotals(name, totalsObj) {
+    function printRowTotals(name, totalsObj) {
         table.printRow(ns,
             name,
             '', // No point showing the total levels
@@ -53,7 +53,7 @@ export async function main(ns) {
         );
     }
 
-    function addRowAverage(name, totalsObj, num) {
+    function printRowAverage(name, totalsObj, num) {
         table.printRow(ns,
             name,
             ns.nFormat(totalsObj['level']    / num, '0.0a'),
@@ -91,10 +91,10 @@ export async function main(ns) {
         addToTotals(server, host.requiredHackingSkill, host.hasAdminRights, host.backdoorInstalled, host.moneyAvailable, host.maxRam, Math.ceil(host.ramUsed / host.maxRam));
     };
     table.printHeader(ns);
-    addRowTotals('Total:', total);
-    addRowTotals('Total (hackable):', hackable);
-    addRowAverage('Average:', total, servers.length);
-    addRowAverage('Average (hackable):', hackable, numHackable);
+    printRowTotals('Total:', total);
+    printRowTotals('Total (hackable):', hackable);
+    printRowAverage('Average:', total, servers.length);
+    printRowAverage('Average (hackable):', hackable, numHackable);
     table.printHeader(ns);
 
     ns.tprint(`Number of servers: ${servers.length}`);
