@@ -12,7 +12,7 @@ export async function main(ns) {
     }
 
     ns.tprint(`Servers without a backdoor: ${serversToBackdoor}`);
-    var serversToBackdoor = 0;
+    let serversToBackdoor = 0;
     const servers = listServers(ns);
     for (const server of servers) {
         const host = ns.getServer(server);
