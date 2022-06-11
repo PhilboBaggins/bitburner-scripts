@@ -62,8 +62,8 @@ export async function main(ns) {
         table.printRow(ns,
             name,
             '', // No point showing the total levels
-            ns.nFormat(totalsObj['admin'],    '0.0a'),
-            ns.nFormat(totalsObj['backdoor'], '0.0a'),
+            ns.nFormat(totalsObj['admin'],    '0a'),
+            ns.nFormat(totalsObj['backdoor'], '0a'),
             ns.nFormat(totalsObj['cash'],     '0.0a'),
             ns.nFormat(totalsObj['cashPercentage'],  '0%'),
             ns.nFormat(totalsObj['maxRam'],   '0.0a') + 'G',
