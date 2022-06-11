@@ -17,12 +17,16 @@ export async function main(ns) {
         'Admin?'.padEnd(10),
         'Backdoor?'.padEnd(10),
         'Cash'.padEnd(10),
+        'Cash %'.padEnd(5),
         'Ram'.padEnd(6),
         'Ram used'.padEnd(5),
     ]);
 
     const servers = listServers(ns).sort(function (a, b) {
-        return ns.getServer(b).requiredHackingSkill - ns.getServer(a).requiredHackingSkill;
+        //return ns.getServer(b).requiredHackingSkill - ns.getServer(a).requiredHackingSkill;
+        //return ns.getServer(a).maxRam - ns.getServer(b).maxRam;
+        //return ns.getServer(a).moneyAvailable - ns.getServer(b).moneyAvailable;
+        return ns.getServer(a).moneyMax - ns.getServer(b).moneyMax;
     });
 
     let total    = { 'level': 0, 'admin': 0, 'backdoor': 0, 'cash': 0, 'cashPercentage': 0, 'maxRam': 0, 'ramUsed': 0 };
