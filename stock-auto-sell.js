@@ -15,7 +15,7 @@ export async function main(ns) {
     ns.disableLog('stock.sell');
 
     while (true) {
-        const stocks = ns.stock.getSymbols().sort(function (a, b) { return ns.stock.getForecast(b) - ns.stock.getForecast(a); })
+        const stocks = ns.stock.getSymbols()
         for (const stock of stocks) {
             const [shares, avgPx, sharesShort, avgPxShort] = ns.stock.getPosition(stock);
             const forecast = ns.stock.getForecast(stock);
