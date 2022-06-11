@@ -16,7 +16,7 @@ export async function main(ns) {
     const servers = listServers(ns);
     for (const server of servers) {
         const host = ns.getServer(server);
-        if (!host.backdoorInstalled) {
+        if ((ns.getHackingLevel() >= ns.getServerRequiredHackingLevel(server)) && (!host.backdoorInstalled)) {
             serversToBackdoor += 1;
             ns.tprint(`* ${server}`);
         }
