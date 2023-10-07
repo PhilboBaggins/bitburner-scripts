@@ -30,7 +30,7 @@ export async function main(ns) {
             ns.tprint(`Launching script '${script}' on server '${host}' with ${threads} threads`);
         }
         if (threads > 0) {
-            await ns.scp(script, ns.getHostname(), host);
+            await ns.scp(script, host);
             ns.exec(script, host, threads, ...scriptArgs);
         }
         else {
