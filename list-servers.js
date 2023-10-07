@@ -65,9 +65,9 @@ export async function main(ns) {
             ns.nFormat(totalsObj['admin'],    '0a'),
             ns.nFormat(totalsObj['backdoor'], '0a'),
             ns.nFormat(totalsObj['cash'],     '0.0a'),
-            ns.nFormat(totalsObj['cashPercentage'],  '0%'),
+            '', // No point showing the total cash percentage
             ns.nFormat(totalsObj['maxRam'],   '0.0a') + 'G',
-            ns.nFormat(totalsObj['ramUsed'],  '0%'),
+            '', // No point showing the total ram used
         );
     }
 
