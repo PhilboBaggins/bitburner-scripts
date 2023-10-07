@@ -28,7 +28,7 @@ export async function main(ns) {
     const childScript = 'stock-grow.js';
     const desiredIntervalMS = 10 * 1000; // 10 seconds
     const growTime = ns.getGrowTime(hostname);
-    const numScripts = Math.floor(growTime / desiredIntervalMS);
+    const numScripts = Math.ceil(growTime / desiredIntervalMS);
     const numThreads = Math.floor(threadsPossible(ns, childScript,  ns.getHostname()) / 100.0 * percentageRAM);
     const numThreadsPerScript = Math.floor(Math.max(1, numThreads / numScripts));
 
