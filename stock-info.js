@@ -5,6 +5,12 @@ function stockServerGrowTime(ns, stock) {
     return companyServer ? ns.getGrowTime(companyServer) : -1;
 }
 
+function getSecurityPercentage(ns, hostname) {
+    const curSecurityLevel = ns.getServerSecurityLevel(hostname);
+    const minSecurityLevel = ns.getServerMinSecurityLevel(hostname);
+    return minSecurityLevel / curSecurityLevel; // TODO: Is this right? Should really be considering max security level as well?
+}
+
 /** @param {NS} ns **/
 export async function main(ns) {
     const args = ns.flags([['help', false]]);
@@ -25,15 +31,18 @@ export async function main(ns) {
         'Ask price',
         'Value'.padStart(9),
         'Grow time'.padStart(30),
+        'Security',
     ]);
 
     let totals = {
+        'stocks-with-server': 0,
         'forecast': 0,
         'volatility': 0,
         'max-shares': 0,
         'ask-price': 0,
         'value': 0,
         'grow-time': 0,
+        'security-level': 0,
     };
 
     const stocks = ns.stock.getSymbols().sort(function (a, b) {
@@ -51,6 +60,7 @@ export async function main(ns) {
             numberFormat(ns, askPrice),
             numberFormat(ns, value),
             companyServer ? ns.tFormat(ns.getGrowTime(companyServer)) : '',
+            companyServer ? ns.nFormat(getSecurityPercentage(ns, companyServer), '0%') : '',
         );
 
         totals['forecast'] += forecast;
@@ -58,7 +68,11 @@ export async function main(ns) {
         totals['max-shares'] += maxShares;
         totals['ask-price'] += askPrice;
         totals['value'] += value;
-        totals['grow-time'] += companyServer ? ns.getGrowTime(companyServer) : 0;
+        if (companyServer) {
+            totals['grow-time'] += ns.getGrowTime(companyServer)
+            totals['security-level'] += getSecurityPercentage(ns, companyServer);
+            totals['stocks-with-server'] += 1;
+        }
     }
 
     function printTotalAndAverage() {
@@ -71,6 +85,7 @@ export async function main(ns) {
             numberFormat(ns, totals['ask-price']),
             numberFormat(ns, totals['value']),
             ns.tFormat(totals['grow-time']),
+            '', // Doesn't make sense to display the total of security level
         );
         table.printRow(ns,
             'Average:',
@@ -80,7 +95,8 @@ export async function main(ns) {
             numberFormat(ns, totals['max-shares'] / stocks.length),
             numberFormat(ns, totals['ask-price'] / stocks.length),
             numberFormat(ns, totals['value'] / stocks.length),
-            ns.tFormat(totals['grow-time'] / stocks.length),
+            ns.tFormat(totals['grow-time'] / totals['stocks-with-server']),
+            ns.nFormat(totals['security-level'] / totals['stocks-with-server'], '0%'),
         );
     }
 
@@ -98,4 +114,5 @@ export async function main(ns) {
     printTotalAndAverage();
     table.printHeader(ns);
     ns.tprint(`Total number of stocks: ${stocks.length}`);
+    ns.tprint(`Total number of stocks with company servers: ${totals['stocks-with-server']}`);
 }
