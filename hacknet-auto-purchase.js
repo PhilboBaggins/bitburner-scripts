@@ -1,4 +1,4 @@
-const SECONDS_IN_A_WEEK = 60 * 60 * 24 * 7;
+const SECONDS_IN_A_DAY = 60 * 60 * 24 * 1;
 const RESERVE_CASH = 1000;
 
 function nodeMaxedOut(ns, nodeIdx) {
@@ -24,7 +24,7 @@ function worthPurchasingMoreNodes(ns) {
 
     // ... then use that max production rate to get the amount earned in a week ...
     // TODO: Is one week's production a sensible value?
-    let maxProductionFor1Week = ns.hacknet.getNodeStats(0).production * SECONDS_IN_A_WEEK;
+    let maxProductionFor1Week = ns.hacknet.getNodeStats(0).production * SECONDS_IN_A_DAY;
 
     // ... only buy a new node if its cost is less than a weeks production
     return ns.hacknet.getPurchaseNodeCost() < maxProductionFor1Week;
