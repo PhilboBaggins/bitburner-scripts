@@ -19,7 +19,7 @@ export async function main(ns) {
 
     ns.disableLog('sleep');
     ns.disableLog('getServerMoneyAvailable');
-    ns.disableLog('stock.buy');
+    ns.disableLog('stock.buyStock');
 
     while (true) {
         const stocks = ns.stock.getSymbols().sort(function (a, b) { return ns.stock.getForecast(b) - ns.stock.getForecast(a); })
@@ -38,7 +38,7 @@ export async function main(ns) {
             if ((sharesToBuy > 0) && (forecast >= minForcast) && (volPer <= maxVolatility)) {
                 // Only buy if our expected minimum profit will cover the cost of the buy/sell commissions
                 if (minExpectedPercentProfit > (2 * gameConstants.stockMarket.commission)) {
-                    const buyPricePerShare = ns.stock.buy(stock, sharesToBuy);
+                    const buyPricePerShare = ns.stock.buyStock(stock, sharesToBuy);
                     const buyPrice = buyPricePerShare * sharesToBuy;
                     ns.print(`Bought ${ns.nFormat(sharesToBuy / maxShares, '0%')} of ${stock.padEnd(4)} shares for $${numberFormat(ns, buyPrice)}`);
                 }

@@ -12,7 +12,7 @@ export async function main(ns) {
     }
 
     ns.disableLog('sleep');
-    ns.disableLog('stock.sell');
+    ns.disableLog('stock.sellStock');
 
     while (true) {
         const stocks = ns.stock.getSymbols()
@@ -20,7 +20,7 @@ export async function main(ns) {
             const [shares, avgPx, sharesShort, avgPxShort] = ns.stock.getPosition(stock);
             const forecast = ns.stock.getForecast(stock);
             if ((shares > 0) && (forecast < 0.5)) {
-                const sellPricePerShare = ns.stock.sell(stock, shares);
+                const sellPricePerShare = ns.stock.sellStock(stock, shares);
                 const sellPrice = sellPricePerShare * shares;
                 const estProfit = sellPrice - (shares * avgPx) - (2 * gameConstants.stockMarket.commission);
                 let msg = `Sold ${numberFormat(ns, shares)} shares of ${stock.padEnd(4)} for $${numberFormat(ns, sellPrice)} for $${numberFormat(ns, estProfit)} profit (${ns.nFormat(estProfit / sellPrice, '0%').padStart(4)})`;
