@@ -1,4 +1,4 @@
-import { threadsPossible } from 'common.js'
+import { gameConstants, threadsPossible } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -26,7 +26,7 @@ export async function main(ns) {
     ns.disableLog('getServerUsedRam');
 
     const childScript = 'stock-grow.js';
-    const desiredIntervalMS = 10 * 1000; // 10 seconds
+    const desiredIntervalMS = 100;//gameConstants.stockMarket.interval;
     const growTime = ns.getGrowTime(hostname);
     const numScripts = Math.ceil(growTime / desiredIntervalMS);
     const numThreads = Math.floor(threadsPossible(ns, childScript,  ns.getHostname()) / 100.0 * percentageRAM);
