@@ -70,6 +70,10 @@ export function threadsPossible(ns, script, hostname) {
     return Math.floor((ns.getServerMaxRam(hostname) - ns.getServerUsedRam(hostname)) / ns.getScriptRam(script));
 }
 
+export function percentRamUsed(ns, hostname) {
+    return ns.getServerUsedRam(hostname) / ns.getServerMaxRam(hostname) * 100.0;
+}
+
 export function createTable(ns, columnNames) {
     let tableBorder = [];
     let tableHeading = [];

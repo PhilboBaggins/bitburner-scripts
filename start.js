@@ -1,4 +1,4 @@
-import { printEverywhere, execAndWait } from 'common.js'
+import { printEverywhere, execAndWait, percentRamUsed } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {
@@ -30,8 +30,16 @@ export async function main(ns) {
     await myExec('stock-auto-buy.js', 1);
     //await myExec('stock-auto-manipulate.js', 1);
     await myExec('stock-auto-sell.js', 1);
-    await myExec('stock-grow-continuous-apocalypse.js', 1);
 
     await myExec('auto-root.js', 1);
     await myExec('deploy-to-all.js', 1, 'hack-self.js');
+
+    // let count = 0;
+    // while (percentRamUsed(ns, ns.getHostname()) < 90.0) {
+    //     await myExec('hack-cycle.js',     100000, 'a' + count);
+    //     await myExec('help-self-hack.js', 100000, 'b' + count);
+    //     count++;
+    // }
+
+    await myExec('stock-grow-continuous-apocalypse.js', 1);
 }
