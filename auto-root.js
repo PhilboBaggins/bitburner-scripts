@@ -10,6 +10,11 @@ function runExeIfAvailable(ns, host, exeName, func) {
 }
 
 async function installBackdoor(ns, target) {
+    if (target == 'w0r1d_d43m0n') {
+        ns.tprint('    Skip automatic installtion of backdoor on w0r1d_d43m0n, you can do it manually when you want');
+        return;
+    }
+
     if (ns.getServer(target).backdoorInstalled) {
         ns.tprint('    Backdoor already installed');
         return;
