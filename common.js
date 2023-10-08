@@ -58,6 +58,28 @@ export function listServers(ns) {
     return retVal;
 }
 
+// Stolen from https://www.reddit.com/r/Bitburner/comments/rm097d/find_server_path_script/
+export function findPath(ns, target, serverName, serverList, ignore, isFound) {
+	ignore.push(serverName);
+	let scanResults = ns.scan(serverName);
+	for (let server of scanResults) {
+		if (ignore.includes(server)) {
+			continue;
+		}
+		if (server === target) {
+			serverList.push(server);
+			return [serverList, true];
+		}
+		serverList.push(server);
+		[serverList, isFound] = findPath(ns, target, server, serverList, ignore, isFound);
+		if (isFound) {
+			return [serverList, isFound];
+		}
+		serverList.pop();
+	}
+	return [serverList, false];
+}
+
 export function numberFormat(ns, num) {
     return ns.nFormat(num, '0.000a').padStart(8);
 }

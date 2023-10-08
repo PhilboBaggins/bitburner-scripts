@@ -1,20 +1,51 @@
-import { scanAndRun } from 'common.js'
+import { scanAndRun, findPath } from 'common.js'
 
 function runExeIfAvailable(ns, host, exeName, func) {
     if (ns.fileExists(exeName, 'home')) {
-        ns.tprint(`    Running ${exeName}`);
+        //ns.tprint(`    Running ${exeName}`);
         func(host);
         return 1;
     }
     return 0;
 }
 
-/** @param {NS} ns **/
-async function installBackdoor(ns) {
-    // TODO: Install backdoor ... once I know what that is
-    // See https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.singularity.installbackdoor.md
-    //ns.tprint(`    Installing backdoor`);
-    //await ns.installBackdoor();
+async function installBackdoor(ns, target) {
+    if (ns.getServer(target).backdoorInstalled) {
+        ns.tprint('    Backdoor already installed');
+        return;
+    }
+
+    if (ns.getHackingLevel() < ns.getServerRequiredHackingLevel(target)) {
+        ns.tprint(`    Unable to install backdoor: insufficient hacking level`);
+        return;
+    }
+
+    // TODO: Check if signularity is available
+
+    let startingServer = ns.getHostname();
+    if (startingServer != target) {
+        // Connect through intermediary servers to get to target
+
+        let [pathToTarget, isFound] = findPath(ns, target, startingServer, [], [], false);
+        if (!isFound) {
+            ns.tprint(`    Unable to installing backdoor: ${target} not found`);
+            return;
+        }
+        //ns.tprint(`    Path to target: ${pathToTarget.join(' -> ')}`);
+
+        ns.singularity.connect(startingServer);
+        for (let i = 0; i < pathToTarget.length; i++) {
+            //ns.tprint(`    Connecting to intermediate server ${pathToTarget[i]}`);
+            let connected = ns.singularity.connect(pathToTarget[i]);
+            if (!connected) {
+                ns.tprint(`    Unable to install backdoor: failed to connect to intermediate server ${pathToTarget[i]}`);
+                return;
+            }
+        }
+    }
+
+    ns.tprint('    Installing backdoor');
+    await ns.singularity.installBackdoor();
 }
 
 /** @param {NS} ns **/
@@ -35,6 +66,7 @@ export async function main(ns) {
     var numServersWithRoot = 0;
     var numServersWithRootNew = 0;
 
+    let startingServer = ns.getHostname();
     await scanAndRun(ns, async function(host) {
         ns.tprint(`${host}:`);
         numServers++;
@@ -49,13 +81,13 @@ export async function main(ns) {
         if (ns.hasRootAccess(host)) {
             ns.tprint('    Already have root access on this server');
             numServersWithRoot++;
-            await installBackdoor(ns);
+            await installBackdoor(ns, host);
         } else if (numPortsOpen >= ns.getServerNumPortsRequired(host)) {
             ns.tprint('    Running NUKE.exe');
             ns.nuke(host);
             numServersWithRoot++;
             numServersWithRootNew++;
-            await installBackdoor(ns);
+            await installBackdoor(ns, host);
         } else {
              ns.tprint('    Unable to run NUKE.exe at this time');
         }
@@ -65,4 +97,7 @@ export async function main(ns) {
     ns.tprint('');
     ns.tprint(`You just gained root access to ${numServersWithRootNew} servers`);
     ns.tprint(`You now have root access to ${numServersWithRoot} of ${numServers} servers (${rootPercentage.toFixed(2)}%)`);
+
+    //ns.tprint(`Returning to staring server: ${startingServer}`);
+    ns.singularity.connect(startingServer);
 }
