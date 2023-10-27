@@ -78,7 +78,7 @@ export async function main(ns) {
         }
 
         // If it's not worth purchasing new nodes and all all existing nodes are fully upgraded, then I guess we're done
-        if (!worthPurchasingMoreNodes(ns) && allNodesMaxedOut(ns)) {
+        if ((ns.hacknet.numNodes() > 0) && allNodesMaxedOut(ns) && !worthPurchasingMoreNodes(ns)) {
             ns.print("Maxed out all existing hacknet nodes :) ... and it doesn't seem worth buying any more");
             return;
         }
