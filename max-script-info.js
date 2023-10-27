@@ -12,6 +12,6 @@ export async function main(ns) {
         return;
     }
 
-    const threads = threadsPossible(ns, childScript,  ns.getHostname());
+    const threads = threadsPossible(ns, childScript, ns.getHostname());
     ns.tprint(`You could run '${childScript}' with ${ns.nFormat(threads, '0.000a')} threads`);
 }
