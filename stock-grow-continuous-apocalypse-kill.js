@@ -15,7 +15,7 @@ export async function main(ns) {
     const childScript = 'stock-grow-continuous-kill.js';
 
     for (const stock in STOCK_TO_SERVER) {
-        ns.tprint(`Launching script ${childScript} for ${stock}`);
+        //ns.tprint(`Launching script ${childScript} for ${stock}`);
         let hostname = STOCK_TO_SERVER[stock];
         ns.exec(childScript, ns.getHostname(), 1, hostname);
     }
