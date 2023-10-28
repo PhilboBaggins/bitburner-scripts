@@ -18,6 +18,8 @@ export async function main(ns) {
     let gymName = 'Powerhouse Gym';
 
     for (let gymtype in ns.enums.GymType) {
+        let startedTraining = false;
+
         while (ns.getPlayer().skills[gymtype] < targetSkillLevel) {
             if (ns.singularity.isBusy()) {
                 await ns.sleep(0.5 * 1000);
@@ -26,12 +28,15 @@ export async function main(ns) {
 
             let shouldFocus = true;
             let success = ns.singularity.gymWorkout(gymName, gymtype, shouldFocus);
-            if (!success) {
+            if (success) {
+                startedTraining = true;
+            } else {
                 // TODO: ??????????????
                 return;
             }
         }
 
-        ns.singularity.stopAction();
+        if (startedTraining)
+            ns.singularity.stopAction();
     }
 }
