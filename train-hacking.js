@@ -1,0 +1,42 @@
+/** @param {NS} ns **/
+export async function main(ns) {
+    const args = ns.flags([['help', false]]);
+    if (args.help) {
+        ns.tprint('???????????????????????????????????????????????????????????');
+        ns.tprint(`Usage: run ${ns.getScriptName()}`);
+        ns.tprint('Example:');
+        ns.tprint(`> run ${ns.getScriptName()}`);
+        return;
+    }
+
+    ns.disableLog('sleep');
+
+    // TODO: Get from command line aguemnts
+    let targetSkillLevel = 3000;
+
+    // TODO: Determine this based on which city I am in
+    let universityName = 'rothman university';
+
+    const skillType = 'hacking';
+    const courseName = 'Algorithms';
+
+    let startedTraining = false;
+    while (ns.getPlayer().skills[skillType] < targetSkillLevel) {
+        if (ns.singularity.isBusy()) {
+            await ns.sleep(0.5 * 1000);
+            continue;
+        }
+
+        let shouldFocus = true;
+        let success = ns.singularity.universityCourse(universityName, courseName, shouldFocus);
+        if (success) {
+            startedTraining = true;
+        } else {
+            // TODO: ??????????????
+            return;
+        }
+    }
+
+    if (startedTraining)
+        ns.singularity.stopAction();
+}
