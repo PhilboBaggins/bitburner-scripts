@@ -214,3 +214,15 @@ export const STOCK_TO_SERVER = {
 export function getServerForStock(stock) {
     return STOCK_TO_SERVER[stock];
 }
+
+export async function myExecAndWait(childScript, numThreads, ...childScriptArgs) {
+    printEverywhere(ns, `Running ${childScript} ${childScriptArgs}`);
+    await execAndWait(ns, childScript, ns.getHostname(), numThreads, ...childScriptArgs);
+    await ns.sleep(1 * 1000);
+}
+
+export async function myExec(childScript, numThreads, ...childScriptArgs) {
+    printEverywhere(ns, `Running ${childScript} ${childScriptArgs}`);
+    ns.exec(childScript, ns.getHostname(), numThreads, ...childScriptArgs);
+    await ns.sleep(1 * 1000);
+}

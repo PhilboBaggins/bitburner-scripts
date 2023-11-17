@@ -1,21 +1,10 @@
-import { printEverywhere, execAndWait, percentRamUsed } from 'common.js'
+import { printEverywhere, execAndWait, percentRamUsed, myExec, myExecAndWait } from 'common.js'
 
 /** @param {NS} ns **/
 export async function main(ns) {
     ns.disableLog('sleep');
     ns.disableLog('exec');
 
-    // Helper functions
-    async function myExecAndWait(childScript, numThreads, ...childScriptArgs) {
-        printEverywhere(ns, `Running ${childScript} ${childScriptArgs}`);
-        await execAndWait(ns, childScript, ns.getHostname(), numThreads, ...childScriptArgs);
-        await ns.sleep(1 * 1000);
-    }
-    async function myExec(childScript, numThreads, ...childScriptArgs) {
-        printEverywhere(ns, `Running ${childScript} ${childScriptArgs}`);
-        ns.exec(childScript, ns.getHostname(), numThreads, ...childScriptArgs);
-        await ns.sleep(1 * 1000);
-    }
 
     // Run the wget script twice because it will download itself and that may update the wget script and lead to new downloads on the second run
     // Recently downloaded files seem to be cached and will download quickly, so running the wget script twice shouldn't cause much delay
