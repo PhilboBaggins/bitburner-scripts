@@ -3,7 +3,7 @@ export async function main(ns) {
     const args = ns.flags([['help', false]]);
     if (args.help) {
         ns.tprint('???????????????????????????????????????????????????????????');
-        ns.tprint(`Usage: run ${ns.getScriptName()}`);
+        ns.tprint(`USAGE: run ${ns.getScriptName()} [targetSkillLevel]`);
         ns.tprint('Example:');
         ns.tprint(`> run ${ns.getScriptName()}`);
         return;
@@ -11,8 +11,11 @@ export async function main(ns) {
 
     ns.disableLog('sleep');
 
-    // TODO: Get from command line aguemnts
-    let targetSkillLevel = 2500;
+    let targetSkillLevel = parseInt(args._[0] + '');
+    if (!targetSkillLevel) {
+        targetSkillLevel = 2500;
+        ns.tprint(`Target skill level not specified, assuming ${targetSkillLevel}`);
+    }
 
     // TODO: Determine this based on which city I am in
     let universityName = 'rothman university';
