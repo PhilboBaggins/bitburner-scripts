@@ -226,3 +226,15 @@ export async function myExec(childScript, numThreads, ...childScriptArgs) {
     ns.exec(childScript, ns.getHostname(), numThreads, ...childScriptArgs);
     await ns.sleep(1 * 1000);
 }
+
+export async function showData(ns, interval, getDataFunc) {
+    ns.disableLog('ALL');
+    ns.tail();
+
+    while (true) {
+        ns.clearLog();
+        let data = await getDataFunc(ns);
+        ns.print(data);
+        await ns.sleep(interval);
+    }
+}
