@@ -12,7 +12,7 @@ export async function main(ns) {
     ns.disableLog('sleep');
 
     // TODO: Get from command line aguemnts
-    let targetSkillLevel = 3000;
+    let targetSkillLevel = 2500;
 
     // TODO: Determine this based on which city I am in
     let universityName = 'rothman university';
